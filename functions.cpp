@@ -234,10 +234,40 @@ void inner_func()
 void iota_func()
 {
     std::cout << "This function is : " << __PRETTY_FUNCTION__ << std::endl;
+    // Input
+    std::vector<int> data(10);
+    int initial_value = 1;
+    std::cout << "Input : ";
+    for (size_t i = 0; i < data.size(); ++i)
+    {
+        std::cout << initial_value + i << ' ';
+    }
+    std::cout << std::endl;
+    // Filling the sequence with increasing values
+    std::cout << "std::iota : ";
+    // Output
+    std::iota(data.begin(), data.end(), initial_value);
+    std::cout << "Output : ";
+    for (auto &elem : data)
+    {
+        std::cout << elem << ' ';
+    }
+    std::cout << std::endl;
+    // Explanation
+    std::cout << "std::iota fills the range with sequentially increasing values, starting with the given value." << std::endl;
 }
 
 // std::setw, std::setfill
 void formatted_output()
 {
     std::cout << "This function is : " << __PRETTY_FUNCTION__ << std::endl;
+    // Input
+    int num = 123;
+    std::cout << "Input : " << num << std::endl;
+    // Formatting output
+    std::cout << "std::setw, std::setfill : ";
+    // Output
+    std::cout << "Output : " << std::setw(10) << std::setfill('0') << num << std::endl;
+    // Explanation
+    std::cout << "std::setw sets the field width of the output stream, and std::setfill sets the fill character." << std::endl;
 }
