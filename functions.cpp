@@ -71,9 +71,68 @@ int main(int argc, char const *argv[])
 }
 
 // std::count, std::count_if
+// simple bool function to demonstrate std::count_if
+bool isEven(int i)
+{
+    return i % 2 == 0;
+}
 void count_func()
 {
     std::cout << "This function is : " << __PRETTY_FUNCTION__ << std::endl;
+    std::cout << "Demonstrating std::count" << std::endl;
+    std::cout << "Functions from <algorithm>" << std::endl;
+    std::cout << "Takes 3 parameters std::count(startOfArr, endOfArr, valueToCount)" << std::endl;
+    // Input
+    std::vector<int> list{10, 20, 30, 30, 20, 10, 10, 20};
+    std::cout << "Input: ";
+    for (auto &elem : list)
+    {
+        std::cout << elem << ' ';
+    }
+    std::cout << std::endl;
+    // Use std::count to count the number of times 10 appears in the list
+    std::cout << "Counting amount of times 10 appears" << std::endl;
+    int count = std::count(list.begin(), list.end(), 10);
+    std::cout << std::endl;
+    // Output
+    if (count)
+    {
+        std::cout << "10 was found " << count << " times in this container" << std::endl;
+    }
+    else
+    {
+        std::cout << "Element not found" << std::endl;
+    }
+    // Explanation
+    std::cout << "std::count returns the number of times a specified value appears within a container" << std::endl;
+    std::cout << std::endl;
+
+    std::cout << "Demonstrating std::count_if" << std::endl;
+    std::cout << "Functions from <algorithm>" << std::endl;
+    std::cout << "Takes 3 parameters std::count(startOfArr, endOfArr, pred)" << std::endl;
+    // Input
+    std::vector<int> list2{1, 3, 4, 5, 8, 9, 10, 15};
+    std::cout << "Input: ";
+    for (auto &elem : list2)
+    {
+        std::cout << elem << ' ';
+    }
+    std::cout << std::endl;
+    // Use std::count_if to count the number of times there is an even number
+    std::cout << "Counting amount of times an even number appears" << std::endl;
+    int count2 = std::count_if(list2.begin(), list2.end(), isEven);
+    // Output
+    if (count2)
+    {
+        std::cout << "There are " << count2 << " even numbers in this container" << std::endl;
+    }
+    else
+    {
+        std::cout << "There are no even numbers in this container" << std::endl;
+    }
+    // Explanation
+    std::cout << "std::count_if takes in a pred for its 3rd parameter, which is a function that returns a boolean" << std::endl;
+    std::cout << "When the boolean returns true, it increases the count" << std::endl;
 }
 
 // std::find, std::find_if
@@ -264,10 +323,11 @@ void formatted_output()
     // Input
     int num = 123;
     std::cout << "Input : " << num << std::endl;
-    // Formatting output
-    std::cout << "std::setw, std::setfill : ";
     // Output
-    std::cout << "Output : " << std::setw(10) << std::setfill('0') << num << std::endl;
-    // Explanation
-    std::cout << "std::setw sets the field width of the output stream, and std::setfill sets the fill character." << std::endl;
+    std::cout << "Output (setw): " << std::setw(10) << num << std::endl;
+    std::cout << "std::setw(10) sets the field width of the output stream to 10" << std::endl;
+    std::cout << "Output (setfill): " << std::setw(10) << std::setfill('0') << num << std::endl;
+    std::cout << "std::setfill('0') will fill in the extra spaces with the value '0' " << std::endl;
+    std::cout << "Output (left): " << std::setw(10) << std::setfill(' ') << std::left << num << " next value lies here" << std::endl;
+    std::cout << "std::left will set allignment to the left side of the prepared space set by setw" << std::endl;
 }
