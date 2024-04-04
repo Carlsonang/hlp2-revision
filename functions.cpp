@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <numeric>
+#include <deque>
 
 void count_func();                  // std::count, std::count_if
 void find_func();                   // std::find, std::find_if
@@ -14,13 +15,16 @@ void comparison_func();             // std::equal, std::less, std::greater, std:
 void container_manipulation_func(); // std::copy, std::copy_if, std::for_each, std::transform, std::fill
 void generate_func();               // std::generate
 void remove_func();                 // std::remove, std::remove_if
-void reverse_func();                // std::reverse, std::reverse_copy
-void search_func();                 // std::binary_search
-void bounds_func();                 // std::lower_bound, std::upper_bound, std::equal_range
-void accumulate_func();             // std::accumulate
-void inner_func();                  // std::inner_product
-void iota_func();                   // std::iota
-void formatted_output();            // std::setw, std::setfill
+/* IMPORTANT */
+void reverse_func();     // std::reverse, std::reverse_copy, std::erase
+void search_func();      // std::binary_search
+void bounds_func();      // std::lower_bound, std::upper_bound, std::equal_range
+void accumulate_func();  // std::accumulate
+void inner_func();       // std::inner_product
+void iota_func();        // std::iota
+void formatted_output(); // std::setw, std::setfill
+void template_func();
+void template_class_func();
 
 int main(int argc, char const *argv[])
 {
@@ -68,6 +72,12 @@ int main(int argc, char const *argv[])
 
     formatted_output();
     std::cout << std::endl;
+
+    template_func();
+    std::cout << std::endl;
+
+    template_class_func();
+    std::cout << std::endl;
 }
 
 // std::count, std::count_if
@@ -92,7 +102,7 @@ void count_func()
     std::cout << std::endl;
     // Use std::count to count the number of times 10 appears in the list
     std::cout << "Counting amount of times 10 appears" << std::endl;
-    int count = std::count(list.begin(), list.end(), 10);
+    size_t count = std::count(list.begin(), list.end(), 11);
     std::cout << std::endl;
     // Output
     if (count)
@@ -196,6 +206,7 @@ void generate_func()
 }
 
 // std::remove, std::remove_if
+// Moves the elements to the end of the container and returns the index of the first element to be removed
 void remove_func()
 {
     std::cout << "This function is : " << __PRETTY_FUNCTION__ << std::endl;
@@ -218,7 +229,7 @@ void bounds_func()
 {
     std::cout << "This function is : " << __PRETTY_FUNCTION__ << std::endl;
     // Input
-    std::vector<int> data{1, 2, 4, 4, 4, 7, 8, 9, 65, 453423, 4123};
+    std::vector<int> data{1, 2, 4, 4, 4, 7, 8, 4, 9, 65, 453423, 4123};
     std::cout << "Input : ";
     for (auto &elem : data)
     {
@@ -268,7 +279,7 @@ void inner_func()
     std::cout << "This function is : " << __PRETTY_FUNCTION__ << std::endl;
     // Input
     std::vector<int> data1{1, 2, 3, 4, 5};
-    std::vector<int> data2{1, 2, 3, 4, 5};
+    std::vector<int> data2{2, 3, 4, 5, 0};
     std::cout << "Input : ";
     for (auto &elem : data1)
     {
@@ -283,7 +294,8 @@ void inner_func()
     // Computing the inner product
     std::cout << "std::inner_product : ";
     // Output
-    int result = std::inner_product(data1.begin(), data1.end(), data2.begin(), 0);
+    int result = 0;
+    result = std::inner_product(data1.begin(), data1.end(), data2.begin(), result);
     std::cout << "Output : Inner Product = " << result << std::endl;
     // Explanation
     std::cout << "std::inner_product computes the inner product of two sequences of elements." << std::endl;
@@ -295,7 +307,7 @@ void iota_func()
     std::cout << "This function is : " << __PRETTY_FUNCTION__ << std::endl;
     // Input
     std::vector<int> data(10);
-    int initial_value = 1;
+    int initial_value = 10;
     std::cout << "Input : ";
     for (size_t i = 0; i < data.size(); ++i)
     {
@@ -330,4 +342,157 @@ void formatted_output()
     std::cout << "std::setfill('0') will fill in the extra spaces with the value '0' " << std::endl;
     std::cout << "Output (left): " << std::setw(10) << std::setfill(' ') << std::left << num << " next value lies here" << std::endl;
     std::cout << "std::left will set allignment to the left side of the prepared space set by setw" << std::endl;
+}
+
+// Strictly typed
+// Templates are instantiated at compile time
+// Function overloading is also compile time
+template <typename T>
+T add2(T a, T b)
+{
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
+    return a + b;
+}
+
+template <typename T1, typename T2>
+T1 add2v2(T1 a, T2 b)
+{
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
+    return a + b;
+}
+
+template <typename T1 = int, typename T2, typename T3>
+T1 add2v3(T2 a, T3 b)
+{
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
+    return a + b;
+}
+
+template <typename T1, typename T2, typename T3 = double>
+T3 add2v4(T1 a, T2 b)
+{
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
+    return a + b;
+}
+
+// double add2(double a, double b)
+// {
+//     std::cout << __PRETTY_FUNCTION__ << std::endl;
+//     return a + b;
+// }
+
+void template_func()
+{
+    int ia{1}, ib{2};
+    double da{1.4}, db{3.6};
+    float fa{0.5f}, fb{1.5f};
+
+    // FAIR AND BALANCED
+    // std::cout << add2(ia, ib) << " is an int" << std::endl;
+    // std::cout << add2(da, db) << " is a double" << std::endl;
+    // std::cout << add2(fa, fb) << " is a float" << std::endl;
+
+    // // UNFAIR AND FUCKED UP
+    // std::cout << add2v2(ia, db) << " is taking in an int and a double and returns an int" << std::endl;
+    // std::cout << add2v2(db, ia) << " is taking in a double and an int and returns a double" << std::endl;
+
+    // // EXPLICIT OUTPUT
+    // std::cout << add2v3<double>(ia, db) << " is taking in an int and a double and returns an double" << std::endl;
+    // std::cout << add2v3<double>(db, ia) << " is taking in a double and an int and returns a double" << std::endl;
+
+    // std::cout << add2v3(ia, db) << " is taking in an int and a double and returns an double" << std::endl;
+    // std::cout << add2v3(db, ia) << " is taking in a double and an int and returns a double" << std::endl;
+
+    // // DEFAULT TYPE OUTPUT
+    // std::cout << add2v4(ia, db) << " is taking in an int and a double and returns a double" << std::endl;
+    // std::cout << add2v4(db, ia) << " is taking in a double and an int and returns a double" << std::endl;
+}
+
+#include <initializer_list>
+
+template <typename T1>
+class my_vector
+{
+public:
+    // Default
+    my_vector() : data{}, size{}, space{}
+    {
+        std::cout << __PRETTY_FUNCTION__ << std::endl;
+        data = new T1[0]{};
+    }
+
+    // Non-Default
+    my_vector(size_t n) : data{}, size{}, space{}
+    {
+        std::cout << __PRETTY_FUNCTION__ << std::endl;
+        data = new T1[n]{};
+    }
+
+    // Single arg constructor
+    my_vector(std::initializer_list<T1> const &other)
+    {
+        std::cout << __PRETTY_FUNCTION__ << std::endl;
+        size = other.size();
+        space = other.size();
+        data = new T1[other.size()];
+        for (size_t i{}; i < other.size(); ++i)
+        {
+            data[i] = other.begin()[i];
+        }
+    }
+
+    // Destructor
+    ~my_vector()
+    {
+        std::cout << __PRETTY_FUNCTION__ << std::endl;
+        delete[] data;
+    }
+
+    // Accessor
+    T1 &operator[](size_t index)
+    {
+        std::cout << __PRETTY_FUNCTION__ << std::endl;
+        return data[index];
+    }
+
+    T1 const &operator[](size_t index) const
+    {
+        std::cout << __PRETTY_FUNCTION__ << std::endl;
+        return data[index];
+    }
+
+    T1 *begin()
+    {
+        return data;
+    }
+
+    T1 *end()
+    {
+        return data + size;
+    }
+
+    template <typename U>
+    friend std::ostream &operator<<(std::ostream &os, my_vector<U> &info)
+    {
+        std::cout << __PRETTY_FUNCTION__ << std::endl;
+        U *start = info.begin(), *ending = info.end();
+        while (start != ending)
+        {
+            os << *start++ << ' ';
+        }
+        os << std::endl;
+        return os;
+    }
+
+private:
+    T1 *data;
+    size_t size = 0;
+    size_t space = 0;
+};
+
+void template_class_func()
+{
+    my_vector<int> info2{1, 2, 3, 4, 5};
+    std::cout << (info2[1] = 5) << std::endl;
+    std::cout << info2 << std::endl;
 }
