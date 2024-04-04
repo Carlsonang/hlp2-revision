@@ -207,6 +207,27 @@ void accumulate_func()
 void inner_func()
 {
     std::cout << "This function is : " << __PRETTY_FUNCTION__ << std::endl;
+    // Input
+    std::vector<int> data1{1, 2, 3, 4, 5};
+    std::vector<int> data2{1, 2, 3, 4, 5};
+    std::cout << "Input : ";
+    for (auto &elem : data1)
+    {
+        std::cout << elem << ' ';
+    }
+    std::cout << " and ";
+    for (auto &elem : data2)
+    {
+        std::cout << elem << ' ';
+    }
+    std::cout << std::endl;
+    // Computing the inner product
+    std::cout << "std::inner_product : ";
+    // Output
+    int result = std::inner_product(data1.begin(), data1.end(), data2.begin(), 0);
+    std::cout << "Output : Inner Product = " << result << std::endl;
+    // Explanation
+    std::cout << "std::inner_product computes the inner product of two sequences of elements." << std::endl;
 }
 
 // std::iota
