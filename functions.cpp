@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <vector>
 #include <string>
+#include <numeric>
 
 void count_func();                  // std::count, std::count_if
 void find_func();                   // std::find, std::find_if
@@ -24,47 +25,85 @@ void formatted_output();            // std::setw, std::setfill
 int main(int argc, char const *argv[])
 {
     count_func();
+    std::cout << std::endl;
+
     find_func();
+    std::cout << std::endl;
+
     element_func();
+    std::cout << std::endl;
+
     sort_func();
+    std::cout << std::endl;
+
     comparison_func();
+    std::cout << std::endl;
+
     container_manipulation_func();
+    std::cout << std::endl;
+
     generate_func();
+    std::cout << std::endl;
+
     remove_func();
+    std::cout << std::endl;
+
     reverse_func();
+    std::cout << std::endl;
+
     search_func();
+    std::cout << std::endl;
+
     bounds_func();
+    std::cout << std::endl;
+
     accumulate_func();
+    std::cout << std::endl;
+
     inner_func();
+    std::cout << std::endl;
+
     iota_func();
+    std::cout << std::endl;
+
     formatted_output();
-    return 0;
+    std::cout << std::endl;
 }
 
 // std::count, std::count_if
 void count_func()
 {
     std::cout << "This function is : " << __PRETTY_FUNCTION__ << std::endl;
-    // Input
-    std::vector<int> data{1, 2, 4, 56, 7, 8, 9, 65, 453423, 4123};
-    std::cout << "Input : ";
-    for (auto &elem : data)
-    {
-        std::cout << elem << ' ';
-    }
-    std::cout << std::endl;
-    // Looking for 2
-    std::cout << "std::find : 2" << std::endl;
-    // Output
-    std::cout << "Output : The value 2 appeared " << std::count(data.begin(), data.end(), 2) << " time(s)." << std::endl;
-    // Explanation
-    std::cout << "std::find will find the number of the values I'm looking for." << std::endl;
 }
 
 // std::find, std::find_if
 void find_func()
 {
     std::cout << "This function is : " << __PRETTY_FUNCTION__ << std::endl;
+    std::cout << "Functions from <algorithm>" << std::endl;
+    std::cout << "Takes 3 parameters std::find(startOfArr, endOfArr, value)" << std::endl;
+    // Input
+    std::vector<int> list{1, 2, 3, 4, 5, 6, 7, 8, 9};
+    std::cout << "Input: ";
+    for (auto &elem : list)
+    {
+        std::cout << elem << ' ';
+    }
+    std::cout << std::endl;
+    // Use std::find to look for 5
+    std::cout << "Looking for 5" << std::endl;
+    auto found = std::find(list.begin(), list.end(), 5);
+    // Output
+    if (found != list.end())
+    {
+        std::cout << "Output: " << *found << " is found at index " << (found - list.begin()) << std::endl;
+    }
+    else
+    {
+        std::cout << "Element not found" << std::endl;
+    }
+    // Explanation
+    std::cout << "std::find will return an iterator pointing to the first occurence of the specified value within the container, else return the end" << std::endl;
 }
 
 // std::max_element, std::min_element, std::min_max_element
@@ -77,31 +116,6 @@ void element_func()
 void sort_func()
 {
     std::cout << "This function is : " << __PRETTY_FUNCTION__ << std::endl;
-    std::vector<int> data{1, 2, 5, 4, 3, 20, -2};
-    std::cout << "Input: ";
-    for (auto &elem : data)
-    {
-        std::cout << elem << ' ';
-    }
-    std::cout << std::endl;
-    // Check if sorted
-
-    std::cout << "Is the data sorted? ";
-    std::is_sorted(data.begin(), data.end()) ? std::cout << "Yes!" : std::cout << "No!";
-    std::cout << std::endl;
-
-    std::cout << "Sorting...." << std::endl;
-    std::sort(data.begin(), data.end());
-
-    for (auto &elem : data)
-    {
-        std::cout << elem << ' ';
-    }
-    std::cout << std::endl;
-
-    std::cout << "Is the data sorted? ";
-    std::is_sorted(data.begin(), data.end()) ? std::cout << "Yes!" : std::cout << "No!";
-    std::cout << std::endl;
 }
 
 // std::equal, std::less, std::greater
@@ -144,12 +158,49 @@ void search_func()
 void bounds_func()
 {
     std::cout << "This function is : " << __PRETTY_FUNCTION__ << std::endl;
+    // Input
+    std::vector<int> data{1, 2, 4, 4, 4, 7, 8, 9, 65, 453423, 4123};
+    std::cout << "Input : ";
+    for (auto &elem : data)
+    {
+        std::cout << elem << ' ';
+    }
+    std::cout << std::endl;
+    // Looking for 4
+    int key = 4;
+    std::cout << "std::lower_bound, std::upper_bound, std::equal_range : " << key << std::endl;
+    // Output
+    std::vector<int>::iterator lower = std::lower_bound(data.begin(), data.end(), key);
+    std::vector<int>::iterator upper = std::upper_bound(data.begin(), data.end(), key);
+    std::cout << "Output : Lower bound at position " << std::distance(data.begin(), lower);
+    std::cout << ", Upper bound at position " << std::distance(data.begin(), upper);
+    std::cout << ", Count: " << std::distance(lower, upper) << std::endl;
+    // Explanation
+    std::cout << "std::lower_bound returns an iterator to the first element not less than the given value." << std::endl;
+    std::cout << "std::upper_bound returns an iterator to the first element greater than the given value." << std::endl;
+    std::cout << "std::equal_range returns a pair of iterators representing the range of elements with the given value." << std::endl;
 }
 
 // std::accumulate
 void accumulate_func()
 {
     std::cout << "This function is : " << __PRETTY_FUNCTION__ << std::endl;
+    // Input
+    std::vector<int> data{1, 2, 3, 4, 5};
+    std::cout << "Input : ";
+    for (auto &elem : data)
+    {
+        std::cout << elem << ' ';
+    }
+    std::cout << std::endl;
+    // Accumulating the data
+    int initial_value = 0;
+    std::cout << "std::accumulate : ";
+    // Output
+    int result = std::accumulate(data.begin(), data.end(), initial_value);
+    std::cout << "Output : Sum = " << result << std::endl;
+    // Explanation
+    std::cout << "std::accumulate computes the sum of the elements in the given range." << std::endl;
 }
 
 // std::inner_product
