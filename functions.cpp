@@ -65,6 +65,9 @@ void count_func()
 void find_func()
 {
     std::cout << "This function is : " << __PRETTY_FUNCTION__ << std::endl;
+    
+    // Input
+    std::vector<int> data{1, 2, 4, 56, 7, 8, 9, 65, 453423, 4123};
 }
 
 // std::max_element, std::min_element, std::min_max_element
