@@ -77,9 +77,9 @@ void element_func()
 void sort_func()
 {
     std::cout << "This function is : " << __PRETTY_FUNCTION__ << std::endl;
-    std::vector<int> data{1,2,5,4,3,20,-2};
+    std::vector<int> data{1, 2, 5, 4, 3, 20, -2};
     std::cout << "Input: ";
-    for(auto &elem : data)
+    for (auto &elem : data)
     {
         std::cout << elem << ' ';
     }
@@ -87,20 +87,20 @@ void sort_func()
     // Check if sorted
 
     std::cout << "Is the data sorted? ";
-    std::is_sorted(data.begin(), data.end()) ? std::cout << "Yes!" : std::cout <<"No!";
+    std::is_sorted(data.begin(), data.end()) ? std::cout << "Yes!" : std::cout << "No!";
     std::cout << std::endl;
 
-    std::cout <<"Sorting...." << std::endl;
+    std::cout << "Sorting...." << std::endl;
     std::sort(data.begin(), data.end());
 
-        for(auto &elem : data)
+    for (auto &elem : data)
     {
         std::cout << elem << ' ';
     }
     std::cout << std::endl;
 
     std::cout << "Is the data sorted? ";
-    std::is_sorted(data.begin(), data.end()) ? std::cout << "Yes!" : std::cout <<"No!";
+    std::is_sorted(data.begin(), data.end()) ? std::cout << "Yes!" : std::cout << "No!";
     std::cout << std::endl;
 }
 
