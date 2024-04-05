@@ -6,6 +6,7 @@
 #include <string>
 #include <numeric>
 #include <deque>
+#include <initializer_list>
 
 // COMPILE THIS FILE WITH THE FOLLOWING COMMAND LINE:
 // g++ -pedantic-errors -std=c++17 functions.cpp && ./a.out && rm a.out
@@ -32,6 +33,7 @@ void template_class_func();
 
 int main(int argc, char const *argv[])
 {
+    std::string selection{argv[1]};
     if (argc == 1 || !isdigit(*argv[1]))
     {
         std::cout << "Select 1 to 17: " << std::endl;
@@ -55,8 +57,7 @@ int main(int argc, char const *argv[])
     }
     else
     {
-
-        switch (*argv[1] - '0')
+        switch (std::stoi(selection))
         {
         case 1:
             count_func();
@@ -248,6 +249,7 @@ void find_func()
 void element_func()
 {
     std::cout << "This function is : " << __PRETTY_FUNCTION__ << std::endl;
+    // Input
     std::vector<int> data{1, 3, 3, 7, 8, 9, 10, 13, 23, 41, 57, 78, 85, 91, 100};
     std::cout << "Input : ";
     for (auto const &elem : data)
@@ -255,21 +257,56 @@ void element_func()
         std::cout << elem << ' ';
     }
     std::cout << std::endl;
+
+    // Usage
     std::vector<int>::iterator min_pos{std::min_element(data.begin(), data.end())};
     std::vector<int>::iterator max_pos{std::max_element(data.begin(), data.end())};
     std::pair<std::vector<int>::iterator, std::vector<int>::iterator> minmax_pos{std::minmax_element(data.begin(), data.end())};
+
+    // Explanation and output
     std::cout << "The minimum element retrieved by std::min_element is : " << *min_pos << std::endl;
     std::cout << "This element is at position : " << std::distance(std::begin(data), min_pos) << std::endl;
     std::cout << "The maximum element retrieved by std::min_element is : " << *max_pos << std::endl;
     std::cout << "This element is at position : " << std::distance(std::begin(data), max_pos) << std::endl;
-    std::cout << "The maximum element retrieved by std::minmax_element is a pair of : " << *minmax_pos.first << " and " << *minmax_pos.second << std::endl;
-    std::cout << "This element is at position : " << std::distance(std::begin(data), minmax_pos.first) << " and " << std::distance(std::begin(data), minmax_pos.second) << std::endl;
+    std::cout << "The min and max element retrieved by std::minmax_element is a pair of : " << *minmax_pos.first << " and " << *minmax_pos.second << std::endl;
+    std::cout << "This elements are at position : " << std::distance(std::begin(data), minmax_pos.first) << " and " << std::distance(std::begin(data), minmax_pos.second) << std::endl;
 }
 
 // std::sort, std::sort_stable, std::is_sorted
 void sort_func()
 {
     std::cout << "This function is : " << __PRETTY_FUNCTION__ << std::endl;
+    std::vector<int> data{5, 3, 6, 8, 9, 19, 199, 21, 25};
+    // Input
+    std::cout << "Input : ";
+    for (auto const &elem : data)
+    {
+        std::cout << elem << ' ';
+    }
+    std::cout << std::endl;
+    std::cout << "The container is" << ((std::is_sorted(std::begin(data), std::end(data))) ? " " : " not ") << "sorted" << std::endl;
+
+    // Default sort (Ascending)
+    std::sort(data.begin(), data.end());
+    std::cout << "Sorted : ";
+    for (auto const &elem : data)
+    {
+        std::cout << elem << ' ';
+    }
+    std::cout << std::endl;
+    std::cout << "The container is" << ((std::is_sorted(std::begin(data), std::end(data))) ? " " : " not ") << "sorted" << std::endl;
+
+    // Function sort
+    std::sort(data.begin(), data.end(), std::greater());
+    std::cout << "Sorted by greater : ";
+    for (auto const &elem : data)
+    {
+        std::cout << elem << ' ';
+    }
+    std::cout << std::endl;
+    std::cout << "The container is" << ((std::is_sorted(std::begin(data), std::end(data))) ? " " : " not ") << "sorted" << std::endl;
+    std::cout << "By default, it only checks ascending order" << std::endl;
+    std::cout << "The container is" << ((std::is_sorted(std::begin(data), std::end(data), std::greater())) ? " " : " not ") << "sorted by descending order" << std::endl;
 }
 
 // std::equal, std::less, std::greater
@@ -295,6 +332,41 @@ void generate_func()
 void remove_func()
 {
     std::cout << "This function is : " << __PRETTY_FUNCTION__ << std::endl;
+    std::vector<int> data{1, 3, 3, 7, 8, 9, 10, 8, 13, 23, 41, 8, 57, 78, 8, 85, 91, 100};
+    std::cout << "Input : ";
+    for (auto const &elem : data)
+    {
+        std::cout << elem << ' ';
+    }
+    std::cout << std::endl;
+    std::vector<int>::iterator removethis = std::remove(std::begin(data), std::end(data), 8);
+    std::cout << "Removed 8 : ";
+    for (auto const &elem : data)
+    {
+        std::cout << elem << ' ';
+    }
+    std::cout << std::endl;
+    data.erase(removethis, data.end());
+    std::cout << "Erasing : ";
+    for (auto const &elem : data)
+    {
+        std::cout << elem << ' ';
+    }
+    std::cout << std::endl;
+    removethis = std::remove_if(std::begin(data), std::end(data), isEven);
+    std::cout << "Removed even numbers : ";
+    for (auto const &elem : data)
+    {
+        std::cout << elem << ' ';
+    }
+    std::cout << std::endl;
+    data.erase(removethis, data.end());
+    std::cout << "Erasing : ";
+    for (auto const &elem : data)
+    {
+        std::cout << elem << ' ';
+    }
+    std::cout << std::endl;
 }
 
 // std::reverse, std::reverse_copy
@@ -439,6 +511,34 @@ T add2(T a, T b)
     return a + b;
 }
 
+template <typename T>
+T add2ptr(T *a, T *b)
+{
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
+    return *a + *b;
+}
+
+template <typename T>
+T add2refptr(T *&a, T *&b)
+{
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
+    return *a + *b;
+}
+
+template <typename T>
+T add2crefptr(T const *const &a, T const *const &b)
+{
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
+    return *a + *b;
+}
+
+template <typename T>
+T add2ptrptr(T (*a)[5], T **b)
+{
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
+    return **a + **b;
+}
+
 template <typename T1, typename T2>
 T1 add2v2(T1 a, T2 b)
 {
@@ -473,27 +573,61 @@ void template_func()
     float fa{0.5f}, fb{1.5f};
 
     // FAIR AND BALANCED
-    // std::cout << add2(ia, ib) << " is an int" << std::endl;
-    // std::cout << add2(da, db) << " is a double" << std::endl;
-    // std::cout << add2(fa, fb) << " is a float" << std::endl;
+    std::cout << "Templates are strictly typed" << std::endl;
+    std::cout << add2(ia, ib) << " is an int" << std::endl;
+    std::cout << add2(da, db) << " is a double" << std::endl;
+    std::cout << add2(fa, fb) << " is a float" << std::endl;
+    std::cout << std::endl;
 
-    // // UNFAIR AND FUCKED UP
-    // std::cout << add2v2(ia, db) << " is taking in an int and a double and returns an int" << std::endl;
-    // std::cout << add2v2(db, ia) << " is taking in a double and an int and returns a double" << std::endl;
+    // POINTERS AND ARRAYS
+    int *pia{&ia}, *pib{&ib};
+    int d1arr[5]{1, 2, 3, 4, 5};
+    int d2arr[1][5]{1, 2, 3, 4, 5};
+    int **ppia{&pia};
 
-    // // EXPLICIT OUTPUT
-    // std::cout << add2v3<double>(ia, db) << " is taking in an int and a double and returns an double" << std::endl;
-    // std::cout << add2v3<double>(db, ia) << " is taking in a double and an int and returns a double" << std::endl;
+    std::cout << add2ptr(pia, pib) << std::endl;
+    std::cout << add2ptr(d1arr, pia) << std::endl;
+    std::cout << "Array is decayed into a pointer" << std::endl;
+    std::cout << add2ptrptr(d2arr, ppia) << std::endl;
+    std::cout << "However, if you have a 2d array, only the top level is decayed" << std::endl;
+    std::cout << "This results in some weird unpronouncable thing which looks like T (*a)[5]" << std::endl;
+    std::cout << std::endl;
 
-    // std::cout << add2v3(ia, db) << " is taking in an int and a double and returns an double" << std::endl;
-    // std::cout << add2v3(db, ia) << " is taking in a double and an int and returns a double" << std::endl;
+    std::cout << "The following uses references" << std::endl;
+    std::cout << add2refptr(pia, pib) << std::endl;
+    std::cout << "Look in the code to see comments about arrays and ptrs with references" << std::endl;
+    // THE FOLLOWING CODE DOES NOT COMPILE
+    // std::cout << add2refptr(d1arr, pia) << std::endl;
+    // When using references, not even arrays will decay and will be 100% strict
 
-    // // DEFAULT TYPE OUTPUT
-    // std::cout << add2v4(ia, db) << " is taking in an int and a double and returns a double" << std::endl;
-    // std::cout << add2v4(db, ia) << " is taking in a double and an int and returns a double" << std::endl;
+    int const *cpia{&ia}, *cpib{&ib};
+    int const cia{ia}, cib{ib};
+    int const *const cpcia{&cia}, *const cpcib{&cib};
+
+    std::cout << add2refptr(pia, pib) << std::endl;
+    std::cout << add2refptr(cpia, cpib) << std::endl;
+    std::cout << add2crefptr(cpcia, cpcib) << std::endl;
+    std::cout << add2ptr(cpcia, cpcib) << std::endl; // Without references top level const is also ignored
+    // std::cout << add2refptr(cpcia, cpcib) << std::endl; // THIS DOESNT RUN CAUSE REFERENCES IS 100% STRICT
+
+    // UNFAIR AND FUCKED UP
+    std::cout << add2v2(ia, db) << " returns an int" << std::endl;
+    std::cout << add2v2(db, ia) << " returns a double" << std::endl;
+    std::cout << std::endl;
+
+    // EXPLICIT OUTPUT
+    std::cout << add2v3<double>(ia, db) << " returns an double" << std::endl;
+    std::cout << add2v3<double>(db, ia) << " returns a double" << std::endl;
+    std::cout << add2v3<double, int, int>(db, ia) << " returns a double" << std::endl;
+
+    std::cout << add2v3(ia, db) << " returns an int" << std::endl;
+    std::cout << add2v3<double>(db, ia) << " returns a double" << std::endl;
+    std::cout << std::endl;
+
+    // DEFAULT TYPE OUTPUT
+    std::cout << add2v4(ia, db) << " returns a double" << std::endl;
+    std::cout << add2v4(db, ia) << " returns a double" << std::endl;
 }
-
-#include <initializer_list>
 
 template <typename T1>
 class my_vector
@@ -534,13 +668,14 @@ public:
     }
 
     // Accessor
-    T1 &operator[](size_t index)
+
+    T1 const &operator[](size_t index) const
     {
         std::cout << __PRETTY_FUNCTION__ << std::endl;
         return data[index];
     }
 
-    T1 const &operator[](size_t index) const
+    T1 &operator[](size_t index)
     {
         std::cout << __PRETTY_FUNCTION__ << std::endl;
         return data[index];
@@ -578,6 +713,9 @@ private:
 void template_class_func()
 {
     my_vector<int> info2{1, 2, 3, 4, 5};
-    std::cout << (info2[1] = 5) << std::endl;
+    int test = info2[1] += test;
+    std::cout << test << std::endl;
+    info2[1] = 5;
+    std::cout << info2[1] << std::endl;
     std::cout << info2 << std::endl;
 }
