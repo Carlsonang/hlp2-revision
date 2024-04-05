@@ -33,8 +33,7 @@ void template_class_func();
 
 int main(int argc, char const *argv[])
 {
-    std::string selection{argv[1]};
-    if (argc == 1 || !isdigit(*argv[1]))
+    if (argc != 2 || !isdigit(*argv[1]))
     {
         std::cout << "Select 1 to 17: " << std::endl;
         std::cout << "1. count" << std::endl;
@@ -57,6 +56,7 @@ int main(int argc, char const *argv[])
     }
     else
     {
+        std::string selection{argv[1]};
         switch (std::stoi(selection))
         {
         case 1:
