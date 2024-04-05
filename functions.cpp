@@ -7,6 +7,10 @@
 #include <numeric>
 #include <deque>
 
+// COMPILE THIS FILE WITH THE FOLLOWING COMMAND LINE:
+// g++ -pedantic-errors -std=c++17 functions.cpp && ./a.out && rm a.out
+// TO SELECT FUNCTION INSERT A VALUE HERE                   ^
+
 void count_func();                  // std::count, std::count_if
 void find_func();                   // std::find, std::find_if
 void element_func();                // std::max_element, std::min_element, std::min_max_element
@@ -14,9 +18,9 @@ void sort_func();                   // std::sort, std::sort_stable, std::is_sort
 void comparison_func();             // std::equal, std::less, std::greater, std::lexicographical_compare
 void container_manipulation_func(); // std::copy, std::copy_if, std::for_each, std::transform, std::fill
 void generate_func();               // std::generate
-void remove_func();                 // std::remove, std::remove_if
 /* IMPORTANT */
-void reverse_func();     // std::reverse, std::reverse_copy, std::erase
+void remove_func();      // std::remove, std::remove_if, std::erase
+void reverse_func();     // std::reverse, std::reverse_copy
 void search_func();      // std::binary_search
 void bounds_func();      // std::lower_bound, std::upper_bound, std::equal_range
 void accumulate_func();  // std::accumulate
@@ -28,56 +32,121 @@ void template_class_func();
 
 int main(int argc, char const *argv[])
 {
-    count_func();
-    std::cout << std::endl;
+    if (argc == 1 || !isdigit(*argv[1]))
+    {
+        std::cout << "Select 1 to 17: " << std::endl;
+        std::cout << "1. count" << std::endl;
+        std::cout << "2. find" << std::endl;
+        std::cout << "3. elements" << std::endl;
+        std::cout << "4. sort" << std::endl;
+        std::cout << "5. comparisons" << std::endl;
+        std::cout << "6. container manipulation" << std::endl;
+        std::cout << "7. generate" << std::endl;
+        std::cout << "8. remove" << std::endl;
+        std::cout << "9. reverse" << std::endl;
+        std::cout << "10. search" << std::endl;
+        std::cout << "11. bounds" << std::endl;
+        std::cout << "12. accumulate" << std::endl;
+        std::cout << "13. inner product" << std::endl;
+        std::cout << "14. iota" << std::endl;
+        std::cout << "15. formatted output" << std::endl;
+        std::cout << "16. template functions" << std::endl;
+        std::cout << "17. class templates" << std::endl;
+    }
+    else
+    {
 
-    find_func();
-    std::cout << std::endl;
+        switch (*argv[1] - '0')
+        {
+        case 1:
+            count_func();
+            std::cout << std::endl;
+            break;
 
-    element_func();
-    std::cout << std::endl;
+        case 2:
+            find_func();
+            std::cout << std::endl;
+            break;
 
-    sort_func();
-    std::cout << std::endl;
+        case 3:
+            element_func();
+            std::cout << std::endl;
+            break;
 
-    comparison_func();
-    std::cout << std::endl;
+        case 4:
+            sort_func();
+            std::cout << std::endl;
+            break;
 
-    container_manipulation_func();
-    std::cout << std::endl;
+        case 5:
+            comparison_func();
+            std::cout << std::endl;
+            break;
 
-    generate_func();
-    std::cout << std::endl;
+        case 6:
+            container_manipulation_func();
+            std::cout << std::endl;
+            break;
 
-    remove_func();
-    std::cout << std::endl;
+        case 7:
+            generate_func();
+            std::cout << std::endl;
+            break;
 
-    reverse_func();
-    std::cout << std::endl;
+        case 8:
+            remove_func();
+            std::cout << std::endl;
+            break;
 
-    search_func();
-    std::cout << std::endl;
+        case 9:
+            reverse_func();
+            std::cout << std::endl;
+            break;
 
-    bounds_func();
-    std::cout << std::endl;
+        case 10:
+            search_func();
+            std::cout << std::endl;
+            break;
 
-    accumulate_func();
-    std::cout << std::endl;
+        case 11:
+            bounds_func();
+            std::cout << std::endl;
+            break;
 
-    inner_func();
-    std::cout << std::endl;
+        case 12:
+            accumulate_func();
+            std::cout << std::endl;
+            break;
 
-    iota_func();
-    std::cout << std::endl;
+        case 13:
+            inner_func();
+            std::cout << std::endl;
+            break;
 
-    formatted_output();
-    std::cout << std::endl;
+        case 14:
+            iota_func();
+            std::cout << std::endl;
+            break;
 
-    template_func();
-    std::cout << std::endl;
+        case 15:
+            formatted_output();
+            std::cout << std::endl;
+            break;
 
-    template_class_func();
-    std::cout << std::endl;
+        case 16:
+            template_func();
+            std::cout << std::endl;
+            break;
+
+        case 17:
+            template_class_func();
+            std::cout << std::endl;
+            break;
+
+        default:
+            break;
+        }
+    }
 }
 
 // std::count, std::count_if
@@ -179,6 +248,22 @@ void find_func()
 void element_func()
 {
     std::cout << "This function is : " << __PRETTY_FUNCTION__ << std::endl;
+    std::vector<int> data{1, 3, 3, 7, 8, 9, 10, 13, 23, 41, 57, 78, 85, 91, 100};
+    std::cout << "Input : ";
+    for (auto const &elem : data)
+    {
+        std::cout << elem << ' ';
+    }
+    std::cout << std::endl;
+    std::vector<int>::iterator min_pos{std::min_element(data.begin(), data.end())};
+    std::vector<int>::iterator max_pos{std::max_element(data.begin(), data.end())};
+    std::pair<std::vector<int>::iterator, std::vector<int>::iterator> minmax_pos{std::minmax_element(data.begin(), data.end())};
+    std::cout << "The minimum element retrieved by std::min_element is : " << *min_pos << std::endl;
+    std::cout << "This element is at position : " << std::distance(std::begin(data), min_pos) << std::endl;
+    std::cout << "The maximum element retrieved by std::min_element is : " << *max_pos << std::endl;
+    std::cout << "This element is at position : " << std::distance(std::begin(data), max_pos) << std::endl;
+    std::cout << "The maximum element retrieved by std::minmax_element is a pair of : " << *minmax_pos.first << " and " << *minmax_pos.second << std::endl;
+    std::cout << "This element is at position : " << std::distance(std::begin(data), minmax_pos.first) << " and " << std::distance(std::begin(data), minmax_pos.second) << std::endl;
 }
 
 // std::sort, std::sort_stable, std::is_sorted
