@@ -512,6 +512,13 @@ T add2(T a, T b)
 }
 
 template <typename T>
+T add2ref(T &a, T &b)
+{
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
+    return a + b;
+}
+
+template <typename T>
 T add2ptr(T *a, T *b)
 {
     std::cout << __PRETTY_FUNCTION__ << std::endl;
@@ -526,7 +533,7 @@ T add2refptr(T *&a, T *&b)
 }
 
 template <typename T>
-T add2crefptr(T const *const &a, T const *const &b)
+T add2crefptr(T *const &a, T *const &b)
 {
     std::cout << __PRETTY_FUNCTION__ << std::endl;
     return *a + *b;
@@ -603,6 +610,12 @@ void template_func()
     int const *cpia{&ia}, *cpib{&ib};
     int const cia{ia}, cib{ib};
     int const *const cpcia{&cia}, *const cpcib{&cib};
+
+    std::cout << add2(cia, ia) << std::endl;
+    std::cout << add2(cia, ib) << std::endl;
+
+    std::cout << add2ref(ia, ib) << std::endl;
+    // std::cout << add2ref(cia, ib) << std::endl;
 
     std::cout << add2refptr(pia, pib) << std::endl;
     std::cout << add2refptr(cpia, cpib) << std::endl;
