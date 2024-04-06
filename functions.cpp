@@ -567,6 +567,20 @@ T3 add2v4(T1 a, T2 b)
     return a + b;
 }
 
+template <typename T, size_t n>
+T add2arr(T (&a)[n], T (&b)[n])
+{
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
+    return a[n - 1] + b[n - 1];
+}
+
+template <typename T, size_t n, size_t m>
+T add2arr(T (&a)[n], T (&b)[m])
+{
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
+    return a[n - 1] + b[m - 1];
+}
+
 // double add2(double a, double b)
 // {
 //     std::cout << __PRETTY_FUNCTION__ << std::endl;
@@ -622,6 +636,11 @@ void template_func()
     std::cout << add2crefptr(cpcia, cpcib) << std::endl;
     std::cout << add2ptr(cpcia, cpcib) << std::endl; // Without references top level const is also ignored
     // std::cout << add2refptr(cpcia, cpcib) << std::endl; // THIS DOESNT RUN CAUSE REFERENCES IS 100% STRICT
+
+    std::vector<int> vec1{0, 1, 2, 3, 4, 5};
+    std::vector<int> vec2{6, 7, 8, 9, 10, 11};
+    std::cout << add2arr(d1arr, d2arr[0]) << std::endl;
+    // std::cout << add2arr(vec1.data(), vec2.data()) << std::endl;
 
     // UNFAIR AND FUCKED UP
     std::cout << add2v2(ia, db) << " returns an int" << std::endl;
